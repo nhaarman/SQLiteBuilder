@@ -1,0 +1,16 @@
+language: android
+jdk: oraclejdk7
+
+android:
+  components:
+  - android-22
+  - build-tools-22.0.1
+
+script:
+ - ./gradlew clean build test artifactoryPublish --stacktrace
+
+after_success:
+ - ./gradlew jacocoTestReport coveralls
+
+notifications:
+  email: change

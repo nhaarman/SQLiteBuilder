@@ -1,0 +1,83 @@
+/*
+ *  Copyright 2015 Niek Haarman
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+package com.nhaarman.sqlitebuilder.impl;
+
+import com.nhaarman.sqlitebuilder.RawSqlBuilder;
+import com.nhaarman.sqlitebuilder.SqlPart;
+import com.nhaarman.sqlitebuilder.UpdateWhere;
+import org.junit.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayContaining;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.mockito.Mockito.*;
+
+@SuppressWarnings("HardCodedStringLiteral")
+public class UpdateValuesImplTest {
+
+  @Test
+  public void prependTo_prependsNothing() {
+    /* Given */
+    UpdateValuesImpl updateValues = new UpdateValuesImpl(new Object[] {1}, mock(SqlPart.class));
+    RawSqlBuilder builder = new RawSqlBuilderImpl();
+
+    /* When */
+    updateValues.prependTo(builder);
+
+    /* Then */
+    assertThat(builder.toString(), isEmptyString());
+  }
+
+  @Test
+  public void previous_returnsProperItem() {
+    /* Given */
+    SqlPart sqlPart = mock(SqlPart.class);
+    UpdateValuesImpl updateValues = new UpdateValuesImpl(new Object[] {1}, sqlPart);
+
+    /* When */
+    SqlPart result = updateValues.previous();
+
+    /* Then */
+    assertThat(result, is(sqlPart));
+  }
+
+  @Test
+  public void getArguments_returnsProperArguments() {
+    /* Given */
+    UpdateValuesImpl updateValues = new UpdateValuesImpl(new Object[] {1, "test"}, mock(SqlPart.class));
+
+    /* When */
+    Object[] arguments = updateValues.getArguments();
+
+    /* Then */
+    assertThat(arguments, is(arrayContaining((Object) 1, "test")));
+  }
+
+  @Test
+  public void where_returnsNotNullValue() {
+   /* Given */
+    UpdateValuesImpl updateValues = new UpdateValuesImpl(new Object[] {1, "test"}, mock(SqlPart.class));
+
+    /* When */
+    UpdateWhere result = updateValues.where("a=?", 1);
+
+    /* Then */
+    assertThat(result, is(notNullValue()));
+  }
+}

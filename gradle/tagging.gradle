@@ -1,0 +1,24 @@
+new ByteArrayOutputStream().withStream { os ->
+
+  exec {
+    commandLine 'git', 'tag'
+    standardOutput = os
+  }
+
+  String tags = os.toString();
+  def scanner = new Scanner(tags);
+  scanner.useDelimiter("\n");
+
+  def lastTag = '0.0.0';
+  while(scanner.hasNext()){
+    lastTag = scanner.next();
+  }
+
+  ext.versionName = lastTag;
+
+  if (isRelease == 'false') {
+    int lastNumber = Integer.parseInt(versionName.substring(versionName.size() - 1))
+    ext.versionName = versionName.substring(0, versionName.size() - 1) + (lastNumber + 1) + "-SNAPSHOT";
+  }
+}
+
