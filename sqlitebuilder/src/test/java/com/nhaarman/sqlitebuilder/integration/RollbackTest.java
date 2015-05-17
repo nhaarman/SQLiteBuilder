@@ -27,7 +27,7 @@ public class RollbackTest extends IntegrationTestBase {
   public void testRollback() {
     /* When */
     rollback()
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("ROLLBACK");
@@ -37,7 +37,7 @@ public class RollbackTest extends IntegrationTestBase {
   public void rollbackTransaction() {
     /* When */
     rollback().transaction()
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("ROLLBACK TRANSACTION");
@@ -47,7 +47,7 @@ public class RollbackTest extends IntegrationTestBase {
   public void rollbackToSavepoint() {
     /* When */
     rollback().to().savePoint("savepointname")
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("ROLLBACK TO SAVEPOINT savepointname");
@@ -57,7 +57,7 @@ public class RollbackTest extends IntegrationTestBase {
   public void rollbackTo() {
     /* When */
     rollback().to("savepointname")
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("ROLLBACK TO SAVEPOINT savepointname");
@@ -67,7 +67,7 @@ public class RollbackTest extends IntegrationTestBase {
   public void rollbackTransactionTo() {
     /* When */
     rollback().transaction().to("savepointname")
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("ROLLBACK TRANSACTION TO SAVEPOINT savepointname");
@@ -77,7 +77,7 @@ public class RollbackTest extends IntegrationTestBase {
   public void rollbackTransactionToSavepoint() {
     /* When */
     rollback().transaction().to().savePoint("savepointname")
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("ROLLBACK TRANSACTION TO SAVEPOINT savepointname");

@@ -28,7 +28,7 @@ public class SelectTest extends IntegrationTestBase {
     /* When */
     select()
         .from("my_table")
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifySelectStatementExecuted("SELECT * FROM my_table");
@@ -39,7 +39,7 @@ public class SelectTest extends IntegrationTestBase {
     /* When */
     select("a", "b")
         .from("my_table")
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifySelectStatementExecuted("SELECT a,b FROM my_table");
@@ -54,7 +54,7 @@ public class SelectTest extends IntegrationTestBase {
         .groupBy("a")
         .orderBy("a", "b")
         .limit(5)
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifySelectStatementExecuted("SELECT a,b FROM my_table WHERE a=? AND b=? GROUP BY a ORDER BY a,b LIMIT 5", 1, 2);

@@ -27,7 +27,7 @@ public class EndTransactionTest extends IntegrationTestBase {
   public void endTransaction() {
     /* When */
     end().transaction()
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("END TRANSACTION");

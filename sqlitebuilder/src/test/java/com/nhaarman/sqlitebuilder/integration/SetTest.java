@@ -30,7 +30,7 @@ public class SetTest extends IntegrationTestBase {
         .set("a")
         .values(1)
         .where("b=?", 2)
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("UPDATE my_table SET a=? WHERE b=?", 1, 2);
@@ -43,7 +43,7 @@ public class SetTest extends IntegrationTestBase {
         .set("a", "b")
         .values(1, 2)
         .where("c=? OR c=?", 3, 4)
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("UPDATE my_table SET a=?,b=? WHERE c=? OR c=?", 1, 2, 3, 4);

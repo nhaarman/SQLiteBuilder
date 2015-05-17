@@ -35,7 +35,7 @@ public class CreateTableTest extends IntegrationTestBase {
             column("b"),
             column("c")
         )
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("CREATE TABLE my_table (a,b,c)");
@@ -52,7 +52,7 @@ public class CreateTableTest extends IntegrationTestBase {
             column("c")
         )
         .withoutRowId()
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("CREATE TABLE my_table (a,b,c) WITHOUT ROWID");
@@ -70,7 +70,7 @@ public class CreateTableTest extends IntegrationTestBase {
             column("c")
         )
         .withoutRowId()
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("CREATE TEMPORARY TABLE my_table (a,b,c) WITHOUT ROWID");
@@ -87,7 +87,7 @@ public class CreateTableTest extends IntegrationTestBase {
             column("c")
         )
         .withoutRowId()
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("CREATE TABLE IF NOT EXISTS my_table (a,b,c) WITHOUT ROWID");
@@ -105,7 +105,7 @@ public class CreateTableTest extends IntegrationTestBase {
             column("c")
         )
         .withoutRowId()
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("CREATE TEMPORARY TABLE IF NOT EXISTS my_table (a,b,c) WITHOUT ROWID");
@@ -120,7 +120,7 @@ public class CreateTableTest extends IntegrationTestBase {
             select("a", "b")
                 .from("my_other_table")
         )
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
 

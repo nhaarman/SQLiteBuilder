@@ -30,7 +30,7 @@ public class AlterTest extends IntegrationTestBase {
     alter()
         .table("database", "table")
         .renameTo("newTableName")
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("ALTER TABLE database.table RENAME TO newTableName");
@@ -44,7 +44,7 @@ public class AlterTest extends IntegrationTestBase {
         .add(
             column("new_column")
         )
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("ALTER TABLE database.table ADD COLUMN new_column");

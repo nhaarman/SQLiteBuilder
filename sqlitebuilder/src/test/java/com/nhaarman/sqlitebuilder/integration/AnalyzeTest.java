@@ -28,7 +28,7 @@ public class AnalyzeTest extends IntegrationTestBase {
     /* When */
     analyze()
         .databaseAndTableOrIndex("database", "table")
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("ANALYZE database.table");

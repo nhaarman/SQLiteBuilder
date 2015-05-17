@@ -28,7 +28,7 @@ public class DropTest extends IntegrationTestBase {
     /* When */
     drop()
         .table("my_table")
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("DROP TABLE my_table");
@@ -39,7 +39,7 @@ public class DropTest extends IntegrationTestBase {
     /* When */
     drop()
         .tableIfExists("my_database", "my_table")
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("DROP TABLE IF EXISTS my_database.my_table");

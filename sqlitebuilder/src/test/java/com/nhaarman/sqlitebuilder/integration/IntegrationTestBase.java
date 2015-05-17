@@ -22,9 +22,9 @@ import static org.mockito.AdditionalMatchers.*;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
-class IntegrationTestBase {
+public class IntegrationTestBase {
 
-  protected TestStatementExecutor mStatementExecutor;
+  private TestStatementExecutor mStatementExecutor;
 
   private DummyDatabase mDatabaseMock;
 
@@ -46,5 +46,9 @@ class IntegrationTestBase {
 
   void verifyStatementExecuted(final String sql, final Object... arguments) {
     verify(mDatabaseMock).executeStatement(eq(sql), aryEq(arguments));
+  }
+
+  TestStatementExecutor getStatementExecutor() {
+    return mStatementExecutor;
   }
 }

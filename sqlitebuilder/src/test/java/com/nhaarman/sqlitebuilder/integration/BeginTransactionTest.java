@@ -26,7 +26,7 @@ public class BeginTransactionTest extends IntegrationTestBase {
   @Test
   public void beginTransaction() {
     /* When */
-    begin().transaction().executeOn(mStatementExecutor);
+    begin().transaction().executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("BEGIN TRANSACTION");
@@ -35,7 +35,7 @@ public class BeginTransactionTest extends IntegrationTestBase {
   @Test
   public void beginDeferredTransaction() {
     /* When */
-    begin().deferred().transaction().executeOn(mStatementExecutor);
+    begin().deferred().transaction().executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("BEGIN DEFERRED TRANSACTION");
@@ -44,7 +44,7 @@ public class BeginTransactionTest extends IntegrationTestBase {
   @Test
   public void beginExclusiveTransaction() {
     /* When */
-    begin().exclusive().transaction().executeOn(mStatementExecutor);
+    begin().exclusive().transaction().executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("BEGIN EXCLUSIVE TRANSACTION");
@@ -53,7 +53,7 @@ public class BeginTransactionTest extends IntegrationTestBase {
   @Test
   public void beginImmediateTransaction() {
     /* When */
-    begin().immediate().transaction().executeOn(mStatementExecutor);
+    begin().immediate().transaction().executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("BEGIN IMMEDIATE TRANSACTION");

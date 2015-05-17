@@ -26,7 +26,7 @@ public class CommitTransactionTest extends IntegrationTestBase {
   @Test
   public void commitTransaction() {
     /* When */
-    commit().transaction().executeOn(mStatementExecutor);
+    commit().transaction().executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("COMMIT TRANSACTION");

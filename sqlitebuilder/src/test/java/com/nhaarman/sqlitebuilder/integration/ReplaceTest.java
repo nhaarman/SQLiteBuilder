@@ -30,7 +30,7 @@ public class ReplaceTest extends IntegrationTestBase {
         .into("my_database", "my_table")
         .columns("a", "b")
         .values(1, "test")
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("REPLACE INTO my_database.my_table (a,b) VALUES (?,?)", 1, "test");

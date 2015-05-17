@@ -26,7 +26,7 @@ public class VacuumTest extends IntegrationTestBase {
   public void vacuum() {
     /* When */
     Statements.vacuum()
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("VACUUM");

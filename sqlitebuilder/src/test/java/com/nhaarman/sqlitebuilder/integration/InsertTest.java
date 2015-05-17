@@ -35,7 +35,7 @@ public class InsertTest extends IntegrationTestBase {
         .into("my_table")
         .columns("a", "b", "c")
         .values(1, 2, 3)
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("INSERT INTO my_table (a,b,c) VALUES (?,?,?)", 1, 2, 3);
@@ -47,7 +47,7 @@ public class InsertTest extends IntegrationTestBase {
     insertOrAbort()
         .into("my_database", "my_table")
         .values(1, 2, 3)
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("INSERT OR ABORT INTO my_database.my_table VALUES (?,?,?)", 1, 2, 3);
@@ -59,7 +59,7 @@ public class InsertTest extends IntegrationTestBase {
     insertOrFail()
         .into("my_table")
         .values(1, 2, 3)
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("INSERT OR FAIL INTO my_table VALUES (?,?,?)", 1, 2, 3);
@@ -72,7 +72,7 @@ public class InsertTest extends IntegrationTestBase {
         .into("my_table")
         .columns("a", "b", "c")
         .values(1, 2, 3)
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("INSERT OR IGNORE INTO my_table (a,b,c) VALUES (?,?,?)", 1, 2, 3);
@@ -85,7 +85,7 @@ public class InsertTest extends IntegrationTestBase {
         .into("my_table")
         .columns("a", "b", "c")
         .values(1, 2, 3)
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("INSERT OR REPLACE INTO my_table (a,b,c) VALUES (?,?,?)", 1, 2, 3);
@@ -98,7 +98,7 @@ public class InsertTest extends IntegrationTestBase {
         .into("my_table")
         .columns("a", "b", "c")
         .values(1, 2, 3)
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("INSERT OR ROLLBACK INTO my_table (a,b,c) VALUES (?,?,?)", 1, 2, 3);

@@ -28,7 +28,7 @@ public class DeleteTest extends IntegrationTestBase {
     /* When */
     delete()
         .from("my_table")
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("DELETE FROM my_table");
@@ -39,7 +39,7 @@ public class DeleteTest extends IntegrationTestBase {
     /* When */
     delete()
         .from("my_database", "my_table")
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("DELETE FROM my_database.my_table");
@@ -51,7 +51,7 @@ public class DeleteTest extends IntegrationTestBase {
     delete()
         .from("my_table")
         .where("a=? AND b=?", 1, 2)
-        .executeOn(mStatementExecutor);
+        .executeOn(getStatementExecutor());
 
     /* Then */
     verifyStatementExecuted("DELETE FROM my_table WHERE a=? AND b=?", 1, 2);
