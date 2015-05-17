@@ -11,7 +11,7 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.impl;
@@ -28,16 +28,8 @@ class SelectImpl extends BaseSqlPart implements Select {
   @NotNull
   private final String[] mColumns;
 
-  @Nullable
-  private final SqlPart mPrevious;
-
   SelectImpl(@NotNull final String... columns) {
-    this(columns, null);
-  }
-
-  SelectImpl(@NotNull final String[] columns, @Nullable final SqlPart previous) {
     mColumns = columns.length == 0 ? new String[] {"*"} : columns;
-    mPrevious = previous;
   }
 
   @NotNull
@@ -61,6 +53,6 @@ class SelectImpl extends BaseSqlPart implements Select {
   @Nullable
   @Override
   public SqlPart previous() {
-    return mPrevious;
+    return null;
   }
 }

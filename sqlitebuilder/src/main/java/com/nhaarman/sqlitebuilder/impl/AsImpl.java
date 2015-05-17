@@ -11,29 +11,38 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.impl;
 
 import com.nhaarman.sqlitebuilder.As;
+import com.nhaarman.sqlitebuilder.FinishedSelectStatement;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
-import com.nhaarman.sqlitebuilder.Select;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-class AsImpl extends BaseSqlPart implements As {
+class AsImpl extends BaseFinishedStatement implements As {
+
+  @NotNull
+  private final FinishedSelectStatement mSelectStatement;
 
   @NotNull
   private final SqlPart mPrevious;
 
-  AsImpl(@NotNull final SqlPart previous) {
+  AsImpl(@NotNull final FinishedSelectStatement selectStatement, @NotNull final SqlPart previous) {
+    mSelectStatement = selectStatement;
     mPrevious = previous;
   }
 
   @Override
   public void prependTo(@NotNull final RawSqlBuilder builder) {
+    for (SqlPart sqlPart : mSelectStatement) {
+      sqlPart.prependTo(builder);
+      builder.prepend(' ');
+    }
+
     builder.prepend("AS");
   }
 
@@ -41,11 +50,5 @@ class AsImpl extends BaseSqlPart implements As {
   @Override
   public SqlPart previous() {
     return mPrevious;
-  }
-
-  @NotNull
-  @Override
-  public Select select(@NotNull final String... columns) {
-    return new SelectImpl(columns, this);
   }
 }

@@ -11,17 +11,14 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.integration;
 
-import com.nhaarman.sqlitebuilder.FinishedStatement;
 import org.junit.Test;
 
 import static com.nhaarman.sqlitebuilder.impl.Statements.begin;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class BeginTransactionTest extends IntegrationTestBase {
@@ -29,36 +26,36 @@ public class BeginTransactionTest extends IntegrationTestBase {
   @Test
   public void beginTransaction() {
     /* When */
-    FinishedStatement statement = begin().transaction();
+    begin().transaction().executeOn(mStatementExecutor);
 
     /* Then */
-    assertThat(toSql(statement), is("BEGIN TRANSACTION"));
+    verifyStatementExecuted("BEGIN TRANSACTION");
   }
 
   @Test
   public void beginDeferredTransaction() {
     /* When */
-    FinishedStatement statement = begin().deferred().transaction();
+    begin().deferred().transaction().executeOn(mStatementExecutor);
 
     /* Then */
-    assertThat(toSql(statement), is("BEGIN DEFERRED TRANSACTION"));
+    verifyStatementExecuted("BEGIN DEFERRED TRANSACTION");
   }
 
   @Test
   public void beginExclusiveTransaction() {
     /* When */
-    FinishedStatement statement = begin().exclusive().transaction();
+    begin().exclusive().transaction().executeOn(mStatementExecutor);
 
     /* Then */
-    assertThat(toSql(statement), is("BEGIN EXCLUSIVE TRANSACTION"));
+    verifyStatementExecuted("BEGIN EXCLUSIVE TRANSACTION");
   }
+
   @Test
   public void beginImmediateTransaction() {
     /* When */
-    FinishedStatement statement = begin().immediate().transaction();
+    begin().immediate().transaction().executeOn(mStatementExecutor);
 
     /* Then */
-    assertThat(toSql(statement), is("BEGIN IMMEDIATE TRANSACTION"));
+    verifyStatementExecuted("BEGIN IMMEDIATE TRANSACTION");
   }
-
 }

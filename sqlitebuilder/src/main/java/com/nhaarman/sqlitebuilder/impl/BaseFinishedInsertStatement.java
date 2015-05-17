@@ -11,11 +11,19 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
-package com.nhaarman.sqlitebuilder;
+package com.nhaarman.sqlitebuilder.impl;
 
-public interface All extends SqlPart {
+import com.nhaarman.sqlitebuilder.FinishedInsertStatement;
+import com.nhaarman.sqlitebuilder.StatementExecutor;
+import org.jetbrains.annotations.NotNull;
 
+abstract class BaseFinishedInsertStatement extends BaseFinishedSqlPart implements FinishedInsertStatement {
+
+  @Override
+  public long executeOn(@NotNull final StatementExecutor<?> statementExecutor) {
+    return statementExecutor.execute(this);
+  }
 }

@@ -17,7 +17,7 @@
 package com.nhaarman.sqlitebuilder.android;
 
 import android.database.sqlite.SQLiteDatabase;
-import com.nhaarman.sqlitebuilder.FinishedQuery;
+import com.nhaarman.sqlitebuilder.FinishedSelectStatement;
 import com.nhaarman.sqlitebuilder.FinishedStatement;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import java.util.Iterator;
@@ -51,15 +51,14 @@ public class AndroidStatementExecutorTest {
     verify(mDatabaseMock).execSQL(anyString(), any(Object[].class));
   }
 
-
   @Test
   public void executeQuery_delegatesToDatabase() {
     /* Given */
-    FinishedQuery query = mock(FinishedQuery.class);
+    FinishedSelectStatement query = mock(FinishedSelectStatement.class);
     when(query.iterator()).thenReturn(new SqlPartIterator());
 
     /* When */
-    mStatementExecutor.executeQuery(query);
+    mStatementExecutor.execute(query);
 
     /* Then */
     verify(mDatabaseMock).rawQuery(anyString(), any(String[].class));

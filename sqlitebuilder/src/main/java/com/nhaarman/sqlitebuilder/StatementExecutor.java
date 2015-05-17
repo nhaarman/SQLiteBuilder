@@ -11,7 +11,7 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder;
@@ -20,7 +20,13 @@ import org.jetbrains.annotations.NotNull;
 
 public interface StatementExecutor<T> {
 
-  T executeQuery(@NotNull FinishedQuery finishedQuery);
-
   void execute(@NotNull FinishedStatement finishedStatement);
+
+  T execute(@NotNull FinishedSelectStatement finishedSelectStatement);
+
+  long execute(@NotNull FinishedInsertStatement finishedInsertStatement);
+
+  long execute(@NotNull FinishedUpdateStatement finishedUpdateStatement);
+
+  long execute(@NotNull FinishedDeleteStatement finishedDeleteStatement);
 }

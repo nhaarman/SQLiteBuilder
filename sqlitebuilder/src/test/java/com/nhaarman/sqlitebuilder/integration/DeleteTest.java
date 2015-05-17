@@ -11,55 +11,49 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.integration;
 
-import com.nhaarman.sqlitebuilder.FinishedStatement;
 import org.junit.Test;
 
 import static com.nhaarman.sqlitebuilder.impl.Statements.delete;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.emptyArray;
-import static org.hamcrest.Matchers.is;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class DeleteTest extends IntegrationTestBase {
 
   @Test
   public void deleteFromTable() {
     /* When */
-    FinishedStatement statement =
-        delete()
-            .from("my_table");
+    delete()
+        .from("my_table")
+        .executeOn(mStatementExecutor);
 
     /* Then */
-    assertThat(toSql(statement), is("DELETE FROM my_table"));
-    assertThat(retrieveArguments(statement), is(emptyArray()));
+    verifyStatementExecuted("DELETE FROM my_table");
   }
 
   @Test
   public void deleteFromDatabaseTable() {
     /* When */
-    FinishedStatement statement =
-        delete()
-            .from("my_database", "my_table");
+    delete()
+        .from("my_database", "my_table")
+        .executeOn(mStatementExecutor);
 
     /* Then */
-    assertThat(toSql(statement), is("DELETE FROM my_database.my_table"));
-    assertThat(retrieveArguments(statement), is(emptyArray()));
+    verifyStatementExecuted("DELETE FROM my_database.my_table");
   }
 
   @Test
   public void deleteFromTableWhere() {
     /* When */
-    FinishedStatement statement = delete()
+    delete()
         .from("my_table")
-        .where("a=? AND b=?", 1, 2);
+        .where("a=? AND b=?", 1, 2)
+        .executeOn(mStatementExecutor);
 
     /* Then */
-    assertThat(toSql(statement), is("DELETE FROM my_table WHERE a=? AND b=?"));
-    assertThat(retrieveArguments(statement), is(arrayContaining((Object) 1, 2)));
+    verifyStatementExecuted("DELETE FROM my_table WHERE a=? AND b=?", 1, 2);
   }
 }

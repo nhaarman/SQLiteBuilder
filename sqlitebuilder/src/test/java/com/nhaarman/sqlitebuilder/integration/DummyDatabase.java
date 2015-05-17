@@ -14,8 +14,14 @@
  *  limitations under the License.
  */
 
-package com.nhaarman.sqlitebuilder;
+package com.nhaarman.sqlitebuilder.integration;
 
-public interface DeleteWhere extends FinishedDeleteStatement {
+import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("InterfaceNeverImplemented")
+interface DummyDatabase {
+
+  void executeStatement(@NotNull String sql, @NotNull Object[] arguments);
+
+  QueryResult executeSelectStatement(@NotNull String sql, @NotNull String[] arguments);
 }

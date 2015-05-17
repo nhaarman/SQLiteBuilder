@@ -11,33 +11,40 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.integration;
 
-import com.nhaarman.sqlitebuilder.FinishedStatement;
-import com.nhaarman.sqlitebuilder.StatementConverter;
-import com.nhaarman.sqlitebuilder.impl.Statements;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 
-public class IntegrationTestBase {
+import static org.mockito.AdditionalMatchers.*;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
 
-  private StatementConverter mStatementConverter;
+class IntegrationTestBase {
+
+  protected TestStatementExecutor mStatementExecutor;
+
+  private DummyDatabase mDatabaseMock;
 
   @Before
   public void setUp() {
-    mStatementConverter = Statements.converter();
+    mDatabaseMock = mock(DummyDatabase.class);
+    mStatementExecutor = new TestStatementExecutor(mDatabaseMock);
   }
 
-  @NotNull
-  String toSql(@NotNull final FinishedStatement finishedStatement) {
-    return mStatementConverter.toSql(finishedStatement);
+  void verifySelectStatementExecuted(final String sql, final Object... arguments) {
+    String[] strings = new String[arguments.length];
+    for (int i = 0; i < arguments.length; i++) {
+      Object argument = arguments[i];
+      strings[i] = String.valueOf(argument);
+    }
+
+    verify(mDatabaseMock).executeSelectStatement(eq(sql), aryEq(strings));
   }
 
-  @NotNull
-  Object[] retrieveArguments(@NotNull final FinishedStatement finishedStatement) {
-    return mStatementConverter.retrieveArguments(finishedStatement);
+  void verifyStatementExecuted(final String sql, final Object... arguments) {
+    verify(mDatabaseMock).executeStatement(eq(sql), aryEq(arguments));
   }
 }

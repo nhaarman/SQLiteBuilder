@@ -14,11 +14,9 @@
  *  limitations under the License.
  */
 
-package com.nhaarman.sqlitebuilder;
+package com.nhaarman.sqlitebuilder.integration;
 
-import org.jetbrains.annotations.NotNull;
+@SuppressWarnings("EmptyClass")
+class QueryResult {
 
-public interface FinishedQuery extends FinishedSqlPart {
-
-  <T> T executeOn(@NotNull StatementExecutor<T> statementExecutor);
 }

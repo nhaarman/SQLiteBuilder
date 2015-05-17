@@ -11,59 +11,52 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.integration;
 
-import com.nhaarman.sqlitebuilder.FinishedStatement;
 import org.junit.Test;
 
 import static com.nhaarman.sqlitebuilder.impl.Statements.select;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayContaining;
-import static org.hamcrest.Matchers.emptyArray;
-import static org.hamcrest.Matchers.is;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class SelectTest extends IntegrationTestBase {
 
   @Test
   public void selectStar() {
     /* When */
-    FinishedStatement statement =
-        select()
-            .from("my_table");
+    select()
+        .from("my_table")
+        .executeOn(mStatementExecutor);
 
     /* Then */
-    assertThat(toSql(statement), is("SELECT * FROM my_table"));
-    assertThat(retrieveArguments(statement), is(emptyArray()));
+    verifySelectStatementExecuted("SELECT * FROM my_table");
   }
 
   @Test
   public void selectColumns() {
     /* When */
-    FinishedStatement statement =
-        select("a", "b")
-            .from("my_table");
+    select("a", "b")
+        .from("my_table")
+        .executeOn(mStatementExecutor);
 
     /* Then */
-    assertThat(toSql(statement), is("SELECT a,b FROM my_table"));
-    assertThat(retrieveArguments(statement), is(emptyArray()));
+    verifySelectStatementExecuted("SELECT a,b FROM my_table");
   }
 
   @Test
   public void selectFromWhereGroupByOrderByLimit() {
     /* When */
-    FinishedStatement statement =
-        select("a", "b")
-            .from("my_table")
-            .where("a=? AND b=?", 1, 2)
-            .groupBy("a")
-            .orderBy("a", "b")
-            .limit(5);
+    select("a", "b")
+        .from("my_table")
+        .where("a=? AND b=?", 1, 2)
+        .groupBy("a")
+        .orderBy("a", "b")
+        .limit(5)
+        .executeOn(mStatementExecutor);
 
     /* Then */
-    assertThat(toSql(statement), is("SELECT a,b FROM my_table WHERE a=? AND b=? GROUP BY a ORDER BY a,b LIMIT 5"));
-    assertThat(retrieveArguments(statement), is(arrayContaining((Object) 1, 2)));
+    verifySelectStatementExecuted("SELECT a,b FROM my_table WHERE a=? AND b=? GROUP BY a ORDER BY a,b LIMIT 5", 1, 2);
   }
 }

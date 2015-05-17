@@ -11,7 +11,7 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.impl;
@@ -20,12 +20,13 @@ import com.nhaarman.sqlitebuilder.As;
 import com.nhaarman.sqlitebuilder.Column;
 import com.nhaarman.sqlitebuilder.CreateColumns;
 import com.nhaarman.sqlitebuilder.CreateTable;
+import com.nhaarman.sqlitebuilder.FinishedSelectStatement;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-class CreateTableImpl extends BaseSqlPart implements CreateTable {
+class CreateTableImpl extends BaseFinishedStatement implements CreateTable {
 
   @Nullable
   private final String mDatabaseName;
@@ -67,7 +68,7 @@ class CreateTableImpl extends BaseSqlPart implements CreateTable {
 
   @NotNull
   @Override
-  public As as() {
-    return new AsImpl(this);
+  public As as(@NotNull final FinishedSelectStatement select) {
+    return new AsImpl(select, this);
   }
 }

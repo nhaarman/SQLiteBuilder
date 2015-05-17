@@ -11,7 +11,7 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.impl;
@@ -30,12 +30,12 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("HardCodedStringLiteral")
-public class WhereImplTest {
+public class SelectWhereImplTest {
 
   @Test
   public void prependTo_prependsProperSql() {
     /* Given */
-    WhereImpl where = new WhereImpl("a=?", new Object[] {1}, mock(SqlPart.class));
+    SelectWhereImpl where = new SelectWhereImpl("a=?", new Object[] {1}, mock(SqlPart.class));
     RawSqlBuilder builder = new RawSqlBuilderImpl();
 
     /* When */
@@ -49,7 +49,7 @@ public class WhereImplTest {
   public void previous_returnsProperItem() {
     /* Given */
     SqlPart sqlPart = mock(SqlPart.class);
-    WhereImpl where = new WhereImpl("a=?", new Object[] {1}, sqlPart);
+    SelectWhereImpl where = new SelectWhereImpl("a=?", new Object[] {1}, sqlPart);
 
     /* When */
     SqlPart result = where.previous();
@@ -61,7 +61,7 @@ public class WhereImplTest {
   @Test
   public void getArguments_returnsProperArguments() {
     /* Given */
-    WhereImpl where = new WhereImpl("a=?", new Object[] {1}, mock(SqlPart.class));
+    SelectWhereImpl where = new SelectWhereImpl("a=?", new Object[] {1}, mock(SqlPart.class));
 
     /* When */
     Object[] arguments = where.getArguments();
@@ -73,7 +73,7 @@ public class WhereImplTest {
   @Test
   public void groupBy_returnsNotNullValue() {
     /* Given */
-    WhereImpl where = new WhereImpl("a=?", new Object[] {1}, mock(SqlPart.class));
+    SelectWhereImpl where = new SelectWhereImpl("a=?", new Object[] {1}, mock(SqlPart.class));
 
     /* When */
     GroupBy result = where.groupBy("a");
@@ -85,7 +85,7 @@ public class WhereImplTest {
   @Test
   public void orderBy_returnsNotNullValue() {
     /* Given */
-    WhereImpl where = new WhereImpl("a=?", new Object[] {1}, mock(SqlPart.class));
+    SelectWhereImpl where = new SelectWhereImpl("a=?", new Object[] {1}, mock(SqlPart.class));
 
     /* When */
     OrderBy result = where.orderBy("a");
@@ -97,7 +97,7 @@ public class WhereImplTest {
   @Test
   public void limit_returnsNotNullValue() {
     /* Given */
-    WhereImpl where = new WhereImpl("a=?", new Object[] {1}, mock(SqlPart.class));
+    SelectWhereImpl where = new SelectWhereImpl("a=?", new Object[] {1}, mock(SqlPart.class));
 
     /* When */
     Limit result = where.limit(5);
