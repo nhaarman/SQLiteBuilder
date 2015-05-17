@@ -6,26 +6,28 @@ SQLiteBuilder for Java
 
 A SQLite statement builder for Java.
 
-Example:
+Example
+-------
 
 ```java
-select("a", "b")
-    .from("my_table")
-    .where("a=? AND b=?", 1, 2)
-    .groupBy("a")
-    .orderBy("a", "b")
-    .limit(5)
-    .executeOn(myStatementExecutor);
+result =
+    select("a", "b")
+        .from("my_table")
+        .where("a=? AND b=?", 1, 2)
+        .groupBy("a")
+        .orderBy("a", "b")
+        .limit(5)
+        .executeOn(myStatementExecutor);
 ``` 
 
-Output:
+Sql Output:
 
 ```
 SELECT a,b FROM my_table WHERE a=? AND b=? GROUP BY a ORDER BY a,b LIMIT 5
 ```
 
 Setup
-=====
+-----
 
 Add one of the following to your `build.gradle`, replacing `x.x.x` with the latest version:
 
@@ -35,7 +37,7 @@ compile 'com.nhaarman:sqlitebuilder-android:x.x.x'
 ```
 
 License
-=======
+-------
 
     Copyright 2015 Niek Haarman
 
