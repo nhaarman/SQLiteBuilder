@@ -16,32 +16,14 @@
 
 package com.nhaarman.sqlitebuilder.impl;
 
-import com.nhaarman.sqlitebuilder.Limit;
-import com.nhaarman.sqlitebuilder.RawSqlBuilder;
-import com.nhaarman.sqlitebuilder.SqlPart;
+import com.nhaarman.sqlitebuilder.FinishedDeleteStatement;
+import com.nhaarman.sqlitebuilder.StatementExecutor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-class LimitImpl extends BaseFinishedSelectStatement implements Limit {
-
-  private final long mLimit;
-
-  @NotNull
-  private final SqlPart mPrevious;
-
-  LimitImpl(final long limit, @NotNull final SqlPart previous) {
-    mLimit = limit;
-    mPrevious = previous;
-  }
+abstract class BaseFinishedDeleteStatement extends BaseFinishedSqlPart implements FinishedDeleteStatement {
 
   @Override
-  public void prependTo(@NotNull final RawSqlBuilder builder) {
-    builder.prepend(mLimit).prepend("LIMIT ");
-  }
-
-  @Nullable
-  @Override
-  public SqlPart previous() {
-    return mPrevious;
+  public long executeOn(@NotNull final StatementExecutor<?> statementExecutor) {
+    return statementExecutor.execute(this);
   }
 }

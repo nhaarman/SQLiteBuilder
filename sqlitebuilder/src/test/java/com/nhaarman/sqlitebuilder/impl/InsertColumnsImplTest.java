@@ -11,7 +11,7 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.impl;
@@ -26,6 +26,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class InsertColumnsImplTest {
 
   @Test
@@ -68,7 +69,7 @@ public class InsertColumnsImplTest {
   }
 
   @Test
-  public void values_returnsNotNullValue( ){
+  public void values_returnsNotNullValue() {
     /* Given */
     InsertColumnsImpl insertColumns = new InsertColumnsImpl(new String[] {"a", "b", "c"}, mock(SqlPart.class));
 

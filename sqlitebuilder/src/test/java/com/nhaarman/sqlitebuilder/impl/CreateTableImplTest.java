@@ -11,7 +11,7 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.impl;
@@ -22,6 +22,7 @@ import com.nhaarman.sqlitebuilder.RawSqlBuilder;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import org.junit.Test;
 
+import static com.nhaarman.sqlitebuilder.impl.Statements.select;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -87,7 +88,7 @@ public class CreateTableImplTest {
     CreateTableImpl createTable = new CreateTableImpl(null, "table", mock(SqlPart.class));
 
     /* When */
-    As result = createTable.as();
+    As result = createTable.as(select("a", "b").from("my_other_table"));
 
     /* Then */
     assertThat(result, is(notNullValue()));

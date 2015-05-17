@@ -11,7 +11,7 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.impl;
@@ -48,7 +48,7 @@ class SqlPartIterator implements Iterator<SqlPart> {
 
     SqlPart next = mLastReturned.previous();
     if (next == null) {
-      throw new NoSuchElementException();
+      throw new NoSuchElementException("No previous SqlPart.");
     }
 
     mLastReturned = next;
@@ -57,6 +57,6 @@ class SqlPartIterator implements Iterator<SqlPart> {
 
   @Override
   public void remove() {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("Cannot remove SqlParts.");
   }
 }

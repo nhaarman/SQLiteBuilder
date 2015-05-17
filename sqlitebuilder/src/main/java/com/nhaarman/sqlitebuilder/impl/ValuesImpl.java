@@ -11,7 +11,7 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.impl;
@@ -22,7 +22,7 @@ import com.nhaarman.sqlitebuilder.Values;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-class ValuesImpl extends BaseFinishedStatement implements Values {
+class ValuesImpl extends BaseFinishedInsertStatement implements Values {
 
   @NotNull
   private final Object[] mExpressions;

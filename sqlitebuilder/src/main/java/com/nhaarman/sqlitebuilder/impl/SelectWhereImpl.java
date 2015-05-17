@@ -20,21 +20,32 @@ import com.nhaarman.sqlitebuilder.GroupBy;
 import com.nhaarman.sqlitebuilder.Limit;
 import com.nhaarman.sqlitebuilder.OrderBy;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
+import com.nhaarman.sqlitebuilder.SelectWhere;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-class GroupByImpl extends BaseFinishedSelectStatement implements GroupBy {
+class SelectWhereImpl extends BaseFinishedSelectStatement implements SelectWhere {
 
   @NotNull
   private final String mExpression;
 
   @NotNull
+  private final Object[] mArguments;
+
+  @NotNull
   private final SqlPart mPrevious;
 
-  GroupByImpl(@NotNull final String expression, @NotNull final SqlPart previous) {
+  SelectWhereImpl(@NotNull final String expression, @NotNull final Object[] arguments, @NotNull final SqlPart previous) {
     mExpression = expression;
+    mArguments = arguments;
     mPrevious = previous;
+  }
+
+  @NotNull
+  @Override
+  public GroupBy groupBy(@NotNull final String expression) {
+    return new GroupByImpl(expression, this);
   }
 
   @NotNull
@@ -51,7 +62,13 @@ class GroupByImpl extends BaseFinishedSelectStatement implements GroupBy {
 
   @Override
   public void prependTo(@NotNull final RawSqlBuilder builder) {
-    builder.prepend(mExpression).prepend("GROUP BY ");
+    builder.prepend(mExpression).prepend("WHERE ");
+  }
+
+  @Nullable
+  @Override
+  public Object[] getArguments() {
+    return mArguments.clone();
   }
 
   @Nullable

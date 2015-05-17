@@ -11,14 +11,14 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.impl;
 
+import com.nhaarman.sqlitebuilder.RawSqlBuilder;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import com.nhaarman.sqlitebuilder.Transaction;
-import com.nhaarman.sqlitebuilder.RawSqlBuilder;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

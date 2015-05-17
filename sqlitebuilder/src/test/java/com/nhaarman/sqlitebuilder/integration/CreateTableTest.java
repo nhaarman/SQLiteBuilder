@@ -11,18 +11,16 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.integration;
 
-import com.nhaarman.sqlitebuilder.FinishedStatement;
 import org.junit.Test;
 
 import static com.nhaarman.sqlitebuilder.impl.Statements.column;
 import static com.nhaarman.sqlitebuilder.impl.Statements.create;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static com.nhaarman.sqlitebuilder.impl.Statements.select;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class CreateTableTest extends IntegrationTestBase {
@@ -30,38 +28,40 @@ public class CreateTableTest extends IntegrationTestBase {
   @Test
   public void createTableWithThreeColumns() {
     /* When */
-    FinishedStatement statement = create()
+    create()
         .table("my_table")
         .columns(
             column("a"),
             column("b"),
             column("c")
-        );
+        )
+        .executeOn(getStatementExecutor());
 
     /* Then */
-    assertThat(toSql(statement), is("CREATE TABLE my_table (a,b,c)"));
+    verifyStatementExecuted("CREATE TABLE my_table (a,b,c)");
   }
 
   @Test
   public void createTableWithThreeColumnsWithoutRowId() {
     /* When */
-    FinishedStatement statement = create()
+    create()
         .table("my_table")
         .columns(
             column("a"),
             column("b"),
             column("c")
         )
-        .withoutRowId();
+        .withoutRowId()
+        .executeOn(getStatementExecutor());
 
     /* Then */
-    assertThat(toSql(statement), is("CREATE TABLE my_table (a,b,c) WITHOUT ROWID"));
+    verifyStatementExecuted("CREATE TABLE my_table (a,b,c) WITHOUT ROWID");
   }
 
   @Test
   public void createTempTableWithThreeColumnsWithoutRowId() {
     /* When */
-    FinishedStatement statement = create()
+    create()
         .temp()
         .table("my_table")
         .columns(
@@ -69,32 +69,34 @@ public class CreateTableTest extends IntegrationTestBase {
             column("b"),
             column("c")
         )
-        .withoutRowId();
+        .withoutRowId()
+        .executeOn(getStatementExecutor());
 
     /* Then */
-    assertThat(toSql(statement), is("CREATE TEMPORARY TABLE my_table (a,b,c) WITHOUT ROWID"));
+    verifyStatementExecuted("CREATE TEMPORARY TABLE my_table (a,b,c) WITHOUT ROWID");
   }
 
   @Test
   public void createTableIfNotExistsWithThreeColumnsWithoutRowId() {
     /* When */
-    FinishedStatement statement = create()
+    create()
         .tableIfNotExists("my_table")
         .columns(
             column("a"),
             column("b"),
             column("c")
         )
-        .withoutRowId();
+        .withoutRowId()
+        .executeOn(getStatementExecutor());
 
     /* Then */
-    assertThat(toSql(statement), is("CREATE TABLE IF NOT EXISTS my_table (a,b,c) WITHOUT ROWID"));
+    verifyStatementExecuted("CREATE TABLE IF NOT EXISTS my_table (a,b,c) WITHOUT ROWID");
   }
 
   @Test
   public void createTempTableIfNotExistsWithThreeColumnsWithoutRowId() {
     /* When */
-    FinishedStatement statement = create()
+    create()
         .temp()
         .tableIfNotExists("my_table")
         .columns(
@@ -102,22 +104,26 @@ public class CreateTableTest extends IntegrationTestBase {
             column("b"),
             column("c")
         )
-        .withoutRowId();
+        .withoutRowId()
+        .executeOn(getStatementExecutor());
 
     /* Then */
-    assertThat(toSql(statement), is("CREATE TEMPORARY TABLE IF NOT EXISTS my_table (a,b,c) WITHOUT ROWID"));
+    verifyStatementExecuted("CREATE TEMPORARY TABLE IF NOT EXISTS my_table (a,b,c) WITHOUT ROWID");
   }
 
   @Test
   public void createTableAs() {
     /* When */
-    FinishedStatement statement = create()
+    create()
         .table("my_table")
-        .as()
-        .select("a", "b")
-        .from("my_other_table");
+        .as(
+            select("a", "b")
+                .from("my_other_table")
+        )
+        .executeOn(getStatementExecutor());
 
     /* Then */
-    assertThat(toSql(statement), is("CREATE TABLE my_table AS SELECT a,b FROM my_other_table"));
+
+    verifyStatementExecuted("CREATE TABLE my_table AS SELECT a,b FROM my_other_table");
   }
 }

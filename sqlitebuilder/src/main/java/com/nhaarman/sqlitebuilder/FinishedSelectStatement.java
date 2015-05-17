@@ -14,24 +14,11 @@
  *  limitations under the License.
  */
 
-package com.nhaarman.sqlitebuilder.impl;
+package com.nhaarman.sqlitebuilder;
 
-import com.nhaarman.sqlitebuilder.FinishedQuery;
-import com.nhaarman.sqlitebuilder.SqlPart;
-import com.nhaarman.sqlitebuilder.StatementExecutor;
-import java.util.Iterator;
 import org.jetbrains.annotations.NotNull;
 
-abstract class BaseFinishedQuery extends BaseSqlPart implements FinishedQuery {
+public interface FinishedSelectStatement extends FinishedSqlPart {
 
-  @NotNull
-  @Override
-  public final Iterator<SqlPart> iterator() {
-    return new SqlPartIterator(this);
-  }
-
-  @Override
-  public <T> T executeOn(@NotNull final StatementExecutor<T> statementExecutor) {
-    return statementExecutor.executeQuery(this);
-  }
+  <T> T executeOn(@NotNull StatementExecutor<T> statementExecutor);
 }

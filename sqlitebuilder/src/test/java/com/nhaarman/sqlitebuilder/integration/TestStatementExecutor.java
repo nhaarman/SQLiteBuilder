@@ -14,10 +14,8 @@
  *  limitations under the License.
  */
 
-package com.nhaarman.sqlitebuilder.android;
+package com.nhaarman.sqlitebuilder.integration;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import com.nhaarman.sqlitebuilder.FinishedDeleteStatement;
 import com.nhaarman.sqlitebuilder.FinishedInsertStatement;
 import com.nhaarman.sqlitebuilder.FinishedSelectStatement;
@@ -28,15 +26,15 @@ import com.nhaarman.sqlitebuilder.StatementExecutor;
 import com.nhaarman.sqlitebuilder.impl.Statements;
 import org.jetbrains.annotations.NotNull;
 
-public class AndroidStatementExecutor implements StatementExecutor<Cursor> {
+class TestStatementExecutor implements StatementExecutor<QueryResult> {
 
   @NotNull
-  private final SQLiteDatabase mDatabase;
+  private final DummyDatabase mDatabase;
 
   @NotNull
   private final StatementConverter mStatementConverter;
 
-  public AndroidStatementExecutor(@NotNull final SQLiteDatabase database) {
+  TestStatementExecutor(@NotNull final DummyDatabase database) {
     mDatabase = database;
     mStatementConverter = Statements.converter();
   }
@@ -50,73 +48,40 @@ public class AndroidStatementExecutor implements StatementExecutor<Cursor> {
   }
 
   @Override
-  public void execute(@NotNull final FinishedStatement finishedStatement) {
-    String sql = mStatementConverter.toSql(finishedStatement);
-    Object[] arguments = mStatementConverter.retrieveArguments(finishedStatement);
-    mDatabase.execSQL(sql, arguments);
-  }
-
-  @Override
-  public Cursor execute(@NotNull final FinishedSelectStatement finishedSelectStatement) {
+  public QueryResult execute(@NotNull final FinishedSelectStatement finishedSelectStatement) {
     String sql = mStatementConverter.toSql(finishedSelectStatement);
     Object[] arguments = mStatementConverter.retrieveArguments(finishedSelectStatement);
-    return mDatabase.rawQuery(sql, toStringArray(arguments));
+    return mDatabase.executeSelectStatement(sql, toStringArray(arguments));
   }
 
   @Override
   public long execute(@NotNull final FinishedInsertStatement finishedInsertStatement) {
     String sql = mStatementConverter.toSql(finishedInsertStatement);
     Object[] arguments = mStatementConverter.retrieveArguments(finishedInsertStatement);
-
-    Cursor cursor = mDatabase.rawQuery(sql, toStringArray(arguments));
-    try {
-      if (cursor != null && cursor.moveToFirst()) {
-        return cursor.getLong(0);
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
-    }
-
-    return -1;
+    mDatabase.executeStatement(sql, arguments);
+    return 0;
   }
 
   @Override
   public long execute(@NotNull final FinishedUpdateStatement finishedUpdateStatement) {
     String sql = mStatementConverter.toSql(finishedUpdateStatement);
     Object[] arguments = mStatementConverter.retrieveArguments(finishedUpdateStatement);
-
-    Cursor cursor = mDatabase.rawQuery(sql, toStringArray(arguments));
-    try {
-      if (cursor != null && cursor.moveToFirst()) {
-        return cursor.getLong(0);
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
-    }
-
-    return -1;
+    mDatabase.executeStatement(sql, arguments);
+    return 0;
   }
 
   @Override
   public long execute(@NotNull final FinishedDeleteStatement finishedDeleteStatement) {
     String sql = mStatementConverter.toSql(finishedDeleteStatement);
     Object[] arguments = mStatementConverter.retrieveArguments(finishedDeleteStatement);
+    mDatabase.executeStatement(sql, arguments);
+    return 0;
+  }
 
-    Cursor cursor = mDatabase.rawQuery(sql, toStringArray(arguments));
-    try {
-      if (cursor != null && cursor.moveToFirst()) {
-        return cursor.getLong(0);
-      }
-    } finally {
-      if (cursor != null) {
-        cursor.close();
-      }
-    }
-
-    return -1;
+  @Override
+  public void execute(@NotNull final FinishedStatement finishedStatement) {
+    String sql = mStatementConverter.toSql(finishedStatement);
+    Object[] arguments = mStatementConverter.retrieveArguments(finishedStatement);
+    mDatabase.executeStatement(sql, arguments);
   }
 }

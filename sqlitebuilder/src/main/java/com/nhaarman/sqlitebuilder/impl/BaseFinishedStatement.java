@@ -11,24 +11,16 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.impl;
 
 import com.nhaarman.sqlitebuilder.FinishedStatement;
-import com.nhaarman.sqlitebuilder.SqlPart;
 import com.nhaarman.sqlitebuilder.StatementExecutor;
-import java.util.Iterator;
 import org.jetbrains.annotations.NotNull;
 
-abstract class BaseFinishedStatement extends BaseSqlPart implements FinishedStatement {
-
-  @NotNull
-  @Override
-  public final Iterator<SqlPart> iterator() {
-    return new SqlPartIterator(this);
-  }
+abstract class BaseFinishedStatement extends BaseFinishedSqlPart implements FinishedStatement {
 
   @Override
   public void executeOn(@NotNull final StatementExecutor<?> statementExecutor) {

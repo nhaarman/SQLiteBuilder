@@ -28,13 +28,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 
-public class BaseFinishedQueryTest {
+public class BaseFinishedSelectStatementTest {
 
   @Test
   public void iterator_returnsProperIterator() {
     /* Given */
     SqlPart sqlPart = mock(SqlPart.class);
-    TestBaseFinishedQuery statement = new TestBaseFinishedQuery(sqlPart);
+    TestBaseFinishedSelectStatement statement = new TestBaseFinishedSelectStatement(sqlPart);
 
     /* When */
     Iterator<SqlPart> iterator = statement.iterator();
@@ -51,21 +51,21 @@ public class BaseFinishedQueryTest {
   public void executeOn_delegatesToParameter() {
     /* Given */
     StatementExecutor<?> statementExecutor = mock(StatementExecutor.class);
-    TestBaseFinishedQuery query = new TestBaseFinishedQuery(mock(SqlPart.class));
+    TestBaseFinishedSelectStatement query = new TestBaseFinishedSelectStatement(mock(SqlPart.class));
 
     /* When */
     query.executeOn(statementExecutor);
 
     /* Then */
-    verify(statementExecutor).executeQuery(query);
+    verify(statementExecutor).execute(query);
   }
 
-  private static class TestBaseFinishedQuery extends BaseFinishedQuery {
+  private static class TestBaseFinishedSelectStatement extends BaseFinishedSelectStatement {
 
     @NotNull
     private final SqlPart mPrevious;
 
-    TestBaseFinishedQuery(@NotNull final SqlPart previous) {
+    TestBaseFinishedSelectStatement(@NotNull final SqlPart previous) {
       mPrevious = previous;
     }
 

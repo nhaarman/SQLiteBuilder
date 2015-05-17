@@ -11,58 +11,47 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.impl;
 
+import com.nhaarman.sqlitebuilder.FinishedSelectStatement;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
-import com.nhaarman.sqlitebuilder.Select;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import org.junit.Test;
 
+import static com.nhaarman.sqlitebuilder.impl.Statements.select;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.*;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class AsImplTest {
 
   @Test
   public void prependTo_prependsProperSql() {
     /* Given */
-    AsImpl as = new AsImpl(mock(SqlPart.class));
+    AsImpl as = new AsImpl(select().from("my_table"), mock(SqlPart.class));
     RawSqlBuilder builder = new RawSqlBuilderImpl();
 
     /* When */
     as.prependTo(builder);
 
     /* Then */
-    assertThat(builder.toString(), is("AS"));
+    assertThat(builder.toString(), is("AS SELECT * FROM my_table"));
   }
 
   @Test
   public void previous_returnsProperItem() {
     /* Given */
     SqlPart sqlPart = mock(SqlPart.class);
-    AsImpl as = new AsImpl(sqlPart);
+    AsImpl as = new AsImpl(mock(FinishedSelectStatement.class), sqlPart);
 
     /* When */
     SqlPart result = as.previous();
 
     /* Then */
     assertThat(result, is(sqlPart));
-  }
-
-  @Test
-  public void select_returnsNotNullValue() {
-    /* Given */
-    AsImpl as = new AsImpl(mock(SqlPart.class));
-
-    /* When */
-    Select result = as.select();
-
-    /* Then */
-    assertThat(result, is(notNullValue()));
   }
 }

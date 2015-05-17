@@ -16,6 +16,9 @@
 
 package com.nhaarman.sqlitebuilder;
 
-public interface DeleteWhere extends FinishedDeleteStatement {
+import org.jetbrains.annotations.NotNull;
 
+public interface FinishedInsertStatement extends FinishedSqlPart {
+
+  long executeOn(@NotNull final StatementExecutor<?> statementExecutor);
 }

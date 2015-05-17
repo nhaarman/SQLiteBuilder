@@ -11,72 +11,75 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.integration;
 
-import com.nhaarman.sqlitebuilder.FinishedStatement;
-import com.nhaarman.sqlitebuilder.impl.Statements;
 import org.junit.Test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static com.nhaarman.sqlitebuilder.impl.Statements.rollback;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class RollbackTest extends IntegrationTestBase {
 
   @Test
-  public void rollback() {
+  public void testRollback() {
     /* When */
-    FinishedStatement statement = Statements.rollback();
+    rollback()
+        .executeOn(getStatementExecutor());
 
     /* Then */
-    assertThat(toSql(statement), is("ROLLBACK"));
+    verifyStatementExecuted("ROLLBACK");
   }
 
   @Test
   public void rollbackTransaction() {
     /* When */
-    FinishedStatement statement = Statements.rollback().transaction();
+    rollback().transaction()
+        .executeOn(getStatementExecutor());
 
     /* Then */
-    assertThat(toSql(statement), is("ROLLBACK TRANSACTION"));
+    verifyStatementExecuted("ROLLBACK TRANSACTION");
   }
 
   @Test
   public void rollbackToSavepoint() {
     /* When */
-    FinishedStatement statement = Statements.rollback().to().savePoint("savepointname");
+    rollback().to().savePoint("savepointname")
+        .executeOn(getStatementExecutor());
 
     /* Then */
-    assertThat(toSql(statement), is("ROLLBACK TO SAVEPOINT savepointname"));
+    verifyStatementExecuted("ROLLBACK TO SAVEPOINT savepointname");
   }
 
   @Test
   public void rollbackTo() {
     /* When */
-    FinishedStatement statement = Statements.rollback().to("savepointname");
+    rollback().to("savepointname")
+        .executeOn(getStatementExecutor());
 
     /* Then */
-    assertThat(toSql(statement), is("ROLLBACK TO SAVEPOINT savepointname"));
+    verifyStatementExecuted("ROLLBACK TO SAVEPOINT savepointname");
   }
 
   @Test
   public void rollbackTransactionTo() {
     /* When */
-    FinishedStatement statement = Statements.rollback().transaction().to("savepointname");
+    rollback().transaction().to("savepointname")
+        .executeOn(getStatementExecutor());
 
     /* Then */
-    assertThat(toSql(statement), is("ROLLBACK TRANSACTION TO SAVEPOINT savepointname"));
+    verifyStatementExecuted("ROLLBACK TRANSACTION TO SAVEPOINT savepointname");
   }
 
   @Test
   public void rollbackTransactionToSavepoint() {
     /* When */
-    FinishedStatement statement = Statements.rollback().transaction().to().savePoint("savepointname");
+    rollback().transaction().to().savePoint("savepointname")
+        .executeOn(getStatementExecutor());
 
     /* Then */
-    assertThat(toSql(statement), is("ROLLBACK TRANSACTION TO SAVEPOINT savepointname"));
+    verifyStatementExecuted("ROLLBACK TRANSACTION TO SAVEPOINT savepointname");
   }
 }

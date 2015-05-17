@@ -11,22 +11,18 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.impl;
 
 import com.nhaarman.sqlitebuilder.DeleteWhere;
-import com.nhaarman.sqlitebuilder.GroupBy;
-import com.nhaarman.sqlitebuilder.Limit;
-import com.nhaarman.sqlitebuilder.OrderBy;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
-import com.nhaarman.sqlitebuilder.SelectWhere;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-class WhereImpl extends BaseFinishedStatement implements SelectWhere, DeleteWhere {
+class DeleteWhereImpl extends BaseFinishedDeleteStatement implements DeleteWhere {
 
   @NotNull
   private final String mExpression;
@@ -37,28 +33,10 @@ class WhereImpl extends BaseFinishedStatement implements SelectWhere, DeleteWher
   @NotNull
   private final SqlPart mPrevious;
 
-  WhereImpl(@NotNull final String expression, @NotNull final Object[] arguments, @NotNull final SqlPart previous) {
+  DeleteWhereImpl(@NotNull final String expression, @NotNull final Object[] arguments, @NotNull final SqlPart previous) {
     mExpression = expression;
     mArguments = arguments;
     mPrevious = previous;
-  }
-
-  @NotNull
-  @Override
-  public GroupBy groupBy(@NotNull final String expression) {
-    return new GroupByImpl(expression, this);
-  }
-
-  @NotNull
-  @Override
-  public OrderBy orderBy(@NotNull final String... terms) {
-    return new OrderByImpl(terms, this);
-  }
-
-  @NotNull
-  @Override
-  public Limit limit(final long limit) {
-    return new LimitImpl(limit, this);
   }
 
   @Override

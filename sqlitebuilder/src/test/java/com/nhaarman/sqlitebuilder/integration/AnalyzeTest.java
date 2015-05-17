@@ -11,17 +11,14 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.integration;
 
-import com.nhaarman.sqlitebuilder.FinishedStatement;
 import org.junit.Test;
 
 import static com.nhaarman.sqlitebuilder.impl.Statements.analyze;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class AnalyzeTest extends IntegrationTestBase {
@@ -29,10 +26,11 @@ public class AnalyzeTest extends IntegrationTestBase {
   @Test
   public void analyzeDatabaseAndTable() {
     /* When */
-    FinishedStatement finishedStatement = analyze()
-        .databaseAndTableOrIndex("database", "table");
+    analyze()
+        .databaseAndTableOrIndex("database", "table")
+        .executeOn(getStatementExecutor());
 
     /* Then */
-    assertThat(toSql(finishedStatement), is("ANALYZE database.table"));
+    verifyStatementExecuted("ANALYZE database.table");
   }
 }
