@@ -16,9 +16,9 @@
 
 package com.nhaarman.sqlitebuilder.impl;
 
-import com.nhaarman.sqlitebuilder.Column;
 import com.nhaarman.sqlitebuilder.CreateColumns;
 import com.nhaarman.sqlitebuilder.CreateTableIfNotExists;
+import com.nhaarman.sqlitebuilder.FinishedColumn;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import org.jetbrains.annotations.NotNull;
@@ -60,7 +60,7 @@ class CreateTableIfNotExistsImpl extends BaseSqlPart implements CreateTableIfNot
 
   @NotNull
   @Override
-  public CreateColumns columns(@NotNull final Column... columns) {
+  public CreateColumns columns(@NotNull final FinishedColumn... columns) {
     return new ColumnsImpl(columns, this);
   }
 }

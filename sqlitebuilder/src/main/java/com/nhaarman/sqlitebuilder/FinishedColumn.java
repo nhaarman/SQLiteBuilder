@@ -16,13 +16,6 @@
 
 package com.nhaarman.sqlitebuilder;
 
-import org.jetbrains.annotations.NotNull;
+public interface FinishedColumn extends FinishedSqlPart {
 
-public interface CreateTable extends FinishedStatement {
-
-  @NotNull
-  CreateColumns columns(@NotNull final FinishedColumn... columns);
-
-  @NotNull
-  As as(@NotNull final FinishedSelectStatement select);
 }

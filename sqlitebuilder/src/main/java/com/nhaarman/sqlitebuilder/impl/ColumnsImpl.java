@@ -16,23 +16,24 @@
 
 package com.nhaarman.sqlitebuilder.impl;
 
-import com.nhaarman.sqlitebuilder.Column;
 import com.nhaarman.sqlitebuilder.CreateColumns;
+import com.nhaarman.sqlitebuilder.FinishedColumn;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import com.nhaarman.sqlitebuilder.WithoutRowId;
+import java.util.Iterator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 class ColumnsImpl extends BaseFinishedStatement implements CreateColumns {
 
   @NotNull
-  private final Column[] mColumns;
+  private final FinishedColumn[] mColumns;
 
   @NotNull
   private final SqlPart mPrevious;
 
-  ColumnsImpl(@NotNull final Column[] columns, @NotNull final SqlPart previous) {
+  ColumnsImpl(@NotNull final FinishedColumn[] columns, @NotNull final SqlPart previous) {
     mColumns = columns;
     mPrevious = previous;
   }
@@ -48,13 +49,24 @@ class ColumnsImpl extends BaseFinishedStatement implements CreateColumns {
     builder.prepend(')');
 
     for (int i = mColumns.length - 1; i >= 0; i--) {
-      mColumns[i].prependTo(builder);
+      prependColumn(builder, mColumns[i]);
+
       if (i > 0) {
         builder.prepend(',');
       }
     }
 
     builder.prepend('(');
+  }
+
+  private void prependColumn(@NotNull final RawSqlBuilder builder, @NotNull final FinishedColumn column) {
+    for (Iterator<SqlPart> iterator = column.iterator(); iterator.hasNext(); ) {
+      SqlPart sqlPart = iterator.next();
+      sqlPart.prependTo(builder);
+      if (iterator.hasNext()) {
+        builder.prepend(' ');
+      }
+    }
   }
 
   @Nullable

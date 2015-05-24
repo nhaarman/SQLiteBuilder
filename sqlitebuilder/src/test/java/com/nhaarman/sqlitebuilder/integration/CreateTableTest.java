@@ -42,6 +42,23 @@ public class CreateTableTest extends IntegrationTestBase {
   }
 
   @Test
+  public void createTableWithTypedColumns() {
+    /* When */
+    create()
+        .table("my_table")
+        .columns(
+            column("a").integer(),
+            column("b").real(),
+            column("c").text(),
+            column("d").blob()
+        )
+        .executeOn(getStatementExecutor());
+
+    /* Then */
+    verifyStatementExecuted("CREATE TABLE my_table (a INTEGER,b REAL,c TEXT,d BLOB)");
+  }
+
+  @Test
   public void createTableWithThreeColumnsWithoutRowId() {
     /* When */
     create()
@@ -74,6 +91,25 @@ public class CreateTableTest extends IntegrationTestBase {
 
     /* Then */
     verifyStatementExecuted("CREATE TEMPORARY TABLE my_table (a,b,c) WITHOUT ROWID");
+  }
+
+  @Test
+  public void createTempTableWithTypedColumnsWithoutRowId() {
+    /* When */
+    create()
+        .temp()
+        .table("my_table")
+        .columns(
+            column("a").integer(),
+            column("b").real(),
+            column("c").text(),
+            column("d").blob()
+        )
+        .withoutRowId()
+        .executeOn(getStatementExecutor());
+
+    /* Then */
+    verifyStatementExecuted("CREATE TEMPORARY TABLE my_table (a INTEGER,b REAL,c TEXT,d BLOB) WITHOUT ROWID");
   }
 
   @Test
@@ -123,7 +159,6 @@ public class CreateTableTest extends IntegrationTestBase {
         .executeOn(getStatementExecutor());
 
     /* Then */
-
     verifyStatementExecuted("CREATE TABLE my_table AS SELECT a,b FROM my_other_table");
   }
 }

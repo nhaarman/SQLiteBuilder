@@ -17,9 +17,9 @@
 package com.nhaarman.sqlitebuilder.impl;
 
 import com.nhaarman.sqlitebuilder.As;
-import com.nhaarman.sqlitebuilder.Column;
 import com.nhaarman.sqlitebuilder.CreateColumns;
 import com.nhaarman.sqlitebuilder.CreateTable;
+import com.nhaarman.sqlitebuilder.FinishedColumn;
 import com.nhaarman.sqlitebuilder.FinishedSelectStatement;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
 import com.nhaarman.sqlitebuilder.SqlPart;
@@ -62,7 +62,7 @@ class CreateTableImpl extends BaseFinishedStatement implements CreateTable {
 
   @NotNull
   @Override
-  public CreateColumns columns(@NotNull final Column... columns) {
+  public CreateColumns columns(@NotNull final FinishedColumn... columns) {
     return new ColumnsImpl(columns, this);
   }
 

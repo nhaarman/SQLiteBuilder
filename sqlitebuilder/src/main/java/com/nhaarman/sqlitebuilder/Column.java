@@ -16,7 +16,13 @@
 
 package com.nhaarman.sqlitebuilder;
 
-public interface Column extends SqlPart {
+public interface Column extends FinishedColumn {
 
-  // TODO: types/constraints
+  ColumnInteger integer();
+
+  ColumnReal real();
+
+  ColumnText text();
+
+  ColumnBlob blob();
 }

@@ -16,12 +16,17 @@
 
 package com.nhaarman.sqlitebuilder.impl;
 
+import com.nhaarman.sqlitebuilder.ColumnBlob;
+import com.nhaarman.sqlitebuilder.ColumnInteger;
+import com.nhaarman.sqlitebuilder.ColumnReal;
+import com.nhaarman.sqlitebuilder.ColumnText;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
 @SuppressWarnings("HardCodedStringLiteral")
@@ -50,5 +55,53 @@ public class ColumnImplTest {
 
     /* Then */
     assertThat(result, is(nullValue()));
+  }
+
+  @Test
+  public void integer_returnsNotNullValue() {
+    /* Given */
+    ColumnImpl column = new ColumnImpl("test");
+
+    /* When */
+    ColumnInteger result = column.integer();
+
+    /* Then */
+    assertThat(result, is(notNullValue()));
+  }
+
+  @Test
+  public void real_returnsNotNullValue() {
+    /* Given */
+    ColumnImpl column = new ColumnImpl("test");
+
+    /* When */
+    ColumnReal result = column.real();
+
+    /* Then */
+    assertThat(result, is(notNullValue()));
+  }
+
+  @Test
+  public void text_returnsNotNullValue() {
+    /* Given */
+    ColumnImpl column = new ColumnImpl("test");
+
+    /* When */
+    ColumnText result = column.text();
+
+    /* Then */
+    assertThat(result, is(notNullValue()));
+  }
+
+  @Test
+  public void blob_returnsNotNullValue() {
+    /* Given */
+    ColumnImpl column = new ColumnImpl("test");
+
+    /* When */
+    ColumnBlob result = column.blob();
+
+    /* Then */
+    assertThat(result, is(notNullValue()));
   }
 }

@@ -1,12 +1,12 @@
 /*
  *  Copyright 2015 Niek Haarman
- *
+ *  
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
- *
+ *  
  *  http://www.apache.org/licenses/LICENSE-2.0
- *
+ *  
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,53 +16,38 @@
 
 package com.nhaarman.sqlitebuilder.impl;
 
-import com.nhaarman.sqlitebuilder.Column;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import org.junit.Test;
-import org.mockito.invocation.*;
-import org.mockito.stubbing.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("HardCodedStringLiteral")
-public class AddColumnImplTest {
+public class ColumnBlobImplTest {
 
   @Test
   public void prependTo_prependsProperSql() {
     /* Given */
-    Column columnMock = mock(Column.class);
-    doAnswer(new Answer() {
-      @Override
-      public Object answer(final InvocationOnMock invocation) throws Throwable {
-        RawSqlBuilder builder = (RawSqlBuilder) invocation.getArguments()[0];
-        builder.prepend("test_column");
-        return null;
-      }
-    }).when(columnMock).prependTo(any(RawSqlBuilder.class));
-
-    SqlPart sqlPart = mock(SqlPart.class);
-
-    AddColumnImpl addColumn = new AddColumnImpl(columnMock, sqlPart);
+    ColumnBlobImpl columnBlob = new ColumnBlobImpl(mock(SqlPart.class));
     RawSqlBuilder builder = new RawSqlBuilderImpl();
 
     /* When */
-    addColumn.prependTo(builder);
+    columnBlob.prependTo(builder);
 
     /* Then */
-    assertThat(builder.toString(), is("ADD COLUMN test_column"));
+    assertThat(builder.toString(), is("BLOB"));
   }
 
   @Test
   public void previous_returnsProperItem() {
     /* Given */
     SqlPart sqlPart = mock(SqlPart.class);
-    AddColumnImpl addColumn = new AddColumnImpl(mock(Column.class), sqlPart);
+    ColumnBlobImpl columnBlob = new ColumnBlobImpl(sqlPart);
 
     /* When */
-    SqlPart result = addColumn.previous();
+    SqlPart result = columnBlob.previous();
 
     /* Then */
     assertThat(result, is(sqlPart));

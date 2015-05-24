@@ -21,5 +21,5 @@ import org.jetbrains.annotations.NotNull;
 public interface CreateTableIfNotExists extends SqlPart {
 
   @NotNull
-  CreateColumns columns(@NotNull final Column... columns);
+  CreateColumns columns(@NotNull final FinishedColumn... columns);
 }

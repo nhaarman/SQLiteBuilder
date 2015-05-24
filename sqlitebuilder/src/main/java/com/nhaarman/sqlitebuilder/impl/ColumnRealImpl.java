@@ -11,58 +11,34 @@
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ *  limitations under the License.
  */
 
 package com.nhaarman.sqlitebuilder.impl;
 
-import com.nhaarman.sqlitebuilder.Column;
-import com.nhaarman.sqlitebuilder.ColumnBlob;
-import com.nhaarman.sqlitebuilder.ColumnInteger;
 import com.nhaarman.sqlitebuilder.ColumnReal;
-import com.nhaarman.sqlitebuilder.ColumnText;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-class ColumnImpl extends BaseFinishedSqlPart implements Column {
+public class ColumnRealImpl extends BaseFinishedSqlPart implements ColumnReal {
 
   @NotNull
-  private final String mNewColumnName;
+  private final SqlPart mPrevious;
 
-  ColumnImpl(@NotNull final String newColumnName) {
-    mNewColumnName = newColumnName;
-  }
-
-  @Override
-  public ColumnInteger integer() {
-    return new ColumnIntegerImpl(this);
-  }
-
-  @Override
-  public ColumnReal real() {
-    return new ColumnRealImpl(this);
-  }
-
-  @Override
-  public ColumnText text() {
-    return new ColumnTextImpl(this);
-  }
-
-  @Override
-  public ColumnBlob blob() {
-    return new ColumnBlobImpl(this);
+  public ColumnRealImpl(@NotNull final SqlPart previous) {
+    mPrevious = previous;
   }
 
   @Override
   public void prependTo(@NotNull final RawSqlBuilder builder) {
-    builder.prepend(mNewColumnName);
+    builder.prepend("REAL");
   }
 
   @Nullable
   @Override
   public SqlPart previous() {
-    return null;
+    return mPrevious;
   }
 }
