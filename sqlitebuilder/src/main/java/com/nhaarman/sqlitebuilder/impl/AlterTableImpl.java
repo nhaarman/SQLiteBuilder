@@ -19,6 +19,7 @@ package com.nhaarman.sqlitebuilder.impl;
 import com.nhaarman.sqlitebuilder.AddColumn;
 import com.nhaarman.sqlitebuilder.AlterTable;
 import com.nhaarman.sqlitebuilder.Column;
+import com.nhaarman.sqlitebuilder.FinishedColumn;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
 import com.nhaarman.sqlitebuilder.RenameTo;
 import com.nhaarman.sqlitebuilder.SqlPart;
@@ -50,13 +51,13 @@ final class AlterTableImpl extends BaseSqlPart implements AlterTable {
 
   @NotNull
   @Override
-  public AddColumn add(@NotNull final Column column) {
+  public AddColumn add(@NotNull final FinishedColumn column) {
     return addColumn(column);
   }
 
   @NotNull
   @Override
-  public AddColumn addColumn(@NotNull final Column column) {
+  public AddColumn addColumn(@NotNull final FinishedColumn column) {
     return new AddColumnImpl(column, this);
   }
 

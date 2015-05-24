@@ -24,8 +24,8 @@ public interface AlterTable extends SqlPart {
   FinishedStatement renameTo(@NotNull String newTableName);
 
   @NotNull
-  FinishedStatement add(@NotNull Column column);
+  FinishedStatement add(@NotNull FinishedColumn column);
 
   @NotNull
-  FinishedStatement addColumn(@NotNull Column column);
+  FinishedStatement addColumn(@NotNull FinishedColumn column);
 }

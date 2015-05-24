@@ -17,28 +17,36 @@
 package com.nhaarman.sqlitebuilder.impl;
 
 import com.nhaarman.sqlitebuilder.AddColumn;
-import com.nhaarman.sqlitebuilder.Column;
+import com.nhaarman.sqlitebuilder.FinishedColumn;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
 import com.nhaarman.sqlitebuilder.SqlPart;
+import java.util.Iterator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 class AddColumnImpl extends BaseFinishedStatement implements AddColumn {
 
   @NotNull
-  private final Column mColumn;
+  private final FinishedColumn mColumn;
 
   @NotNull
   private final SqlPart mPrevious;
 
-  AddColumnImpl(@NotNull final Column column, @NotNull final SqlPart previous) {
+  AddColumnImpl(@NotNull final FinishedColumn column, @NotNull final SqlPart previous) {
     mColumn = column;
     mPrevious = previous;
   }
 
   @Override
   public void prependTo(@NotNull final RawSqlBuilder builder) {
-    mColumn.prependTo(builder);
+    for (Iterator<SqlPart> iterator = mColumn.iterator(); iterator.hasNext(); ) {
+      SqlPart sqlPart = iterator.next();
+      sqlPart.prependTo(builder);
+
+      if (iterator.hasNext()) {
+        builder.prepend(' ');
+      }
+    }
     builder.prepend("ADD COLUMN ");
   }
 

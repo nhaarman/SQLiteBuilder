@@ -20,8 +20,6 @@ import com.nhaarman.sqlitebuilder.Column;
 import com.nhaarman.sqlitebuilder.RawSqlBuilder;
 import com.nhaarman.sqlitebuilder.SqlPart;
 import org.junit.Test;
-import org.mockito.invocation.*;
-import org.mockito.stubbing.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -33,16 +31,7 @@ public class AddColumnImplTest {
   @Test
   public void prependTo_prependsProperSql() {
     /* Given */
-    Column columnMock = mock(Column.class);
-    doAnswer(new Answer() {
-      @Override
-      public Object answer(final InvocationOnMock invocation) throws Throwable {
-        RawSqlBuilder builder = (RawSqlBuilder) invocation.getArguments()[0];
-        builder.prepend("test_column");
-        return null;
-      }
-    }).when(columnMock).prependTo(any(RawSqlBuilder.class));
-
+    Column columnMock = new ColumnImpl("test_column");
     SqlPart sqlPart = mock(SqlPart.class);
 
     AddColumnImpl addColumn = new AddColumnImpl(columnMock, sqlPart);

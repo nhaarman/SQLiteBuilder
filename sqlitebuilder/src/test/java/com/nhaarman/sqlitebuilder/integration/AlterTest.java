@@ -42,11 +42,11 @@ public class AlterTest extends IntegrationTestBase {
     alter()
         .table("database", "table")
         .add(
-            column("new_column")
+            column("new_column").integer()
         )
         .executeOn(getStatementExecutor());
 
     /* Then */
-    verifyStatementExecuted("ALTER TABLE database.table ADD COLUMN new_column");
+    verifyStatementExecuted("ALTER TABLE database.table ADD COLUMN new_column INTEGER");
   }
 }
